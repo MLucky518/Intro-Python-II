@@ -30,10 +30,19 @@ class Player:
                     return
                 self.current_room = self.current_room.n_to
             elif direction == 'd':
+                if self.current_room.e_to.is_locked:
+                    print(f"LOCKED!!!")
+                    return
                 self.current_room = self.current_room.e_to
             elif direction == 's':
+                if self.current_room.s_to.is_locked:
+                    print(f"LOCKED!!!")
+                    return
                 self.current_room = self.current_room.s_to
             elif direction == 'a':
+                if self.current_room.w_to.is_locked:
+                    print(f"\nLOCKED!!!\n")
+                    return
                 self.current_room = self.current_room.w_to
             print(f'\n{self.current_room}\n')
         except AttributeError:
@@ -52,7 +61,7 @@ class Player:
                 self.inventory.append(current_item)
                 self.current_room.inventory.remove(current_item)
                 current_item.on_take()
-                print(f"\nYou picked up {current_item} \n")
+                print(f"\nYou picked up {current_item}\n")
             else:
                 print("\n no inventory space\n")
 

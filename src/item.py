@@ -26,9 +26,17 @@ class Weapon(Item):
         return(f"{self.name}")
 
 
-inventories = [
-    [
-        Item("matches", "Matches....Recently used",
-             "There is a picture of  a queen of diamonds on the back ")
-    ],
-]
+game_items = {
+    "GH-Key":Item("GH-Key", "A key of some kind", "")
+}
+
+inventories = {
+
+    "outside": [game_items["GH-Key"]],
+
+}
+
+
+unlocks = {
+    "GH": game_items["GH-Key"]
+}
