@@ -27,12 +27,13 @@ class Weapon(Item):
 
 
 game_items = {
-    "GH-Key":Item("GH-Key", "A key of some kind", "")
+    "GH-Key":Item("GH-Key", "A key of some kind", "This appears to be a key to a guard house"),
+    "GUN": Weapon("gun","pistol","",9)
 }
 
 inventories = {
 
-    "outside": [game_items["GH-Key"]],
+    "outside": [ game_items["GH-Key"],game_items["GUN"] ],
 
 }
 

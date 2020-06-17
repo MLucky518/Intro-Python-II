@@ -4,7 +4,7 @@ from item import Item
 from item import inventories
 from player import Player
 from item import unlocks
-
+import sys
 #
 
 
@@ -15,9 +15,9 @@ room = {
                      """In front of you there is an unlocked gate with a winding cobblestone path leading up to the Wyndham Mansion\n On your left past the gate is a large greenhouse, \n and on your right is what seems to be a guard house for gate security """, inventories["outside"], False, []),
 
 
-    "entrance": Room("Outside Mansion Main Entrance", """Before you are two heavy wooden doors that appear to be unlocked \n On your right you see a large greenhouse, \n and on your left there is a guard house """, [], False, []),
+    "entrance": Room("Main Entrance", """Before you are two heavy wooden doors that appear to be unlocked \n On your right you see a large greenhouse, \n and on your left there is a guard house """, [], False, []),
 
-    "Guard House": Room("Guard House", """ Locked guard house""", [], True, unlocks["GH"]),
+    "Guard House": Room("Guard House", """This used to be locked""", [], True, unlocks["GH"]),
 
     'foyer':    Room("Foyer", """You are in a huge open area.\n In front of you there is a large door with a snake crest above the entrance.\n To your left you can see a regular looking wooden door,\n but to your right you can see a door with a lions head crest above the entrance.""", [], False, []),
 
@@ -26,6 +26,7 @@ room = {
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
 the distance, but there is no way across the chasm.""", [], False, []),
+
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
 to north. The smell of gold permeates the air.""", [], False, []),
@@ -42,7 +43,8 @@ room['outside'].n_to = room['entrance']
 room["entrance"].n_to = room["foyer"]
 room["entrance"].e_to = room["Guard House"]
 room["foyer"].e_to = room["lion"]
-room['foyer'].s_to = room['outside']
+room['entrance'].s_to = room['outside']
+room['foyer'].s_to = room['entrance']
 room['foyer'].n_to = room['overlook']
 # room['foyer'].e_to = room['narrow']
 room['overlook'].s_to = room['foyer']
@@ -97,6 +99,10 @@ def check_input():
     elif selection.lower() == "location":
         print(new_player.current_room)
 
+    elif selection.lower() == "q":
+        print(f"\n Quitter! \n")
+        sys.exit()
+
 
 def handle_inventory():
     new_player.print_inventory()
@@ -122,7 +128,30 @@ def check_movement(player):
         if player.current_room.e_to.is_locked:
             for item in player.inventory:
                 if item == player.current_room.e_to.unlock_item:
-                    player.current_room.e_to.is_locked = False   
+                    player.current_room.e_to.is_locked = False
+                    player.inventory.remove(item)
+                    print("You unlocked the door!")
+    if selection == "w":
+        if player.current_room.n_to.is_locked:
+            for item in player.inventory:
+                if item == player.current_room.n_to.unlock_item:
+                    player.current_room.n_to.is_locked = False
+                    player.inventory.remove(item)
+                    print("You unlocked the door!")
+    if selection == "a":
+        if player.current_room.w_to.is_locked:
+            for item in player.inventory:
+                if item == player.current_room.w_to.unlock_item:
+                    player.current_room.w_to.is_locked = False
+                    player.inventory.remove(item)
+                    print("You unlocked the door!")
+
+    if selection == "s":
+        if player.current_room.s_to.is_locked:
+            for item in player.inventory:
+                if item == player.current_room.s_to.unlock_item:
+                    player.current_room.s_to.is_locked = False
+                    player.inventory.remove(item)
                     print("You unlocked the door!")
     player.move(selection)
 

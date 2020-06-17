@@ -1,5 +1,3 @@
-# Write a class to hold player information, e.g. what room they are in
-# currently.
 from random import randint
 
 
@@ -52,7 +50,7 @@ class Player:
         if len(self.current_room.inventory) <= 0:
             print(f"\nThe area contains nothing of interest\n")
             return
-        num = randint(0, len(self.current_room.inventory) - 1)
+        num = randint(0, len(self.current_room.inventory)-1)
         current_item = self.current_room.inventory[num]
         selection = input(
             f" \n you found  {current_item.name} would you like to pick it up?\n y for yes \n n for no\n")
